@@ -1,36 +1,12 @@
 ---
-# Note: these dependencies are only sufficient to build from source with the
-#       --disable-documentation flag to configure. It is *not* sufficient to
-#       build a .deb
-shadowsocks_dependencies:
-  - git
-  - gcc
-  - make
-  - autoconf
-  - automake
-  - shtool
-  - libtool
-  - libev-dev
-  - libmbedtls-dev
-  - libpcre3-dev
-  - libsodium-dev
-  - libudns-dev
-  # Shadowsocks may complain about lack of entropy without rng-tools installed
-  - rng-tools
-
-shadowsocks_checksum: "sha256:7d9b43b0235a57c115bfe160efd54abef96bffcbfff61c5496e7c2800f0734ca"
-shadowsocks_version: "3.0.6"
-shadowsocks_compilation_directory: "/usr/local/src/shadowsocks-libev-{{ shadowsocks_version }}"
-shadowsocks_source_filename: "shadowsocks-libev-{{ shadowsocks_version }}.tar.gz"
-shadowsocks_source_location: "/usr/local/src/{{ shadowsocks_source_filename }}"
-
-# Configuring the build without documentation means we save close to 900mb of deps
-# with the tradeoff of not creating man pages
-shadowsocks_configure_flags: "--disable-documentation --prefix=/usr"
-
 shadowsocks_location: "/etc/shadowsocks-libev"
 shadowsocks_password_file: "{{ shadowsocks_location }}/shadowsocks-password.txt"
-shadowsocks_password_file_localpath: "../{{ streisand_local_directory }}/shadowsocks-password.txt"
+
+# V2ray-plugin
+go_path: "GOPATH=$HOME/go"
+v2ray_github: "github.com/shadowsocks/v2ray-plugin"
+v2ray_location: "/root/go/bin"
+v2ray_options: "server;host={{ shadowsocks_v2ray_cover_domain }}"
 
 # Add -v for verbose mode to help with debugging
 shadowsocks_daemon_args: "-u"
@@ -38,3 +14,5 @@ shadowsocks_daemon_args: "-u"
 shadowsocks_gateway_location: "{{ streisand_gateway_location }}/shadowsocks"
 
 shadowsocks_qr_code: "{{ shadowsocks_gateway_location }}/shadowsocks-qr-code.png"
+
+shadowsocks_systemd_service_path: "/etc/systemd/system/shadowsocks-libev.service.d"

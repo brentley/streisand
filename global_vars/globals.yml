@@ -1,0 +1,8 @@
+---
+upstream_dns_servers:
+  - 1.1.1.1
+  - 1.0.0.1
+
+streisand_client_test: no
+
+streisand_site_vars: "{{ lookup('env','HOME') }}/.streisand/site.yml"
